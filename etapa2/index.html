@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <title>Projeto de Extensão — Entidade X</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Manifesto PWA -->
+    <link rel="manifest" href="manifest.webmanifest" />
+
+    <!-- Cor do tema do aplicativo -->
+    <meta name="theme-color" content="#0ea5e9" />
+  </head>
+
+  <body class="min-h-screen bg-slate-50 text-slate-800">
+    <!-- Link para pular diretamente ao conteúdo principal -->
+    <a
+      href="#conteudo-principal"
+      class="sr-only rounded bg-sky-700 px-3 py-2 text-white focus:absolute focus:left-2 focus:top-2 focus:not-sr-only"
+    >
+      Ir para o conteúdo principal
+    </a>
+
+    <header class="mx-auto max-w-5xl px-4 py-6">
+      <h1 class="text-3xl font-bold text-sky-600">
+        Projeto de Extensão — Entidade X
+      </h1>
+
+      <p class="mt-1 text-slate-600">
+        Site acessível, responsivo e instalável (PWA).
+      </p>
+    </header>
+
+    <main
+      id="app"
+      class="mx-auto max-w-5xl px-4 pb-24"
+    >
+      <!-- Navegação responsiva -->
+      <nav
+        class="mt-4"
+        aria-label="Navegação principal"
+      >
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded bg-sky-600 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-sky-400 md:hidden"
+          @click="menuAberto = !menuAberto"
+          :aria-expanded="menuAberto"
+          aria-controls="menu-principal"
+        >
+          ☰ Menu
+        </button>
+
+        <ul
+          id="menu-principal"
+          class="mt-3 md:mt-0 md:flex md:gap-6"
+          :class="menuAberto ? 'block' : 'hidden md:flex'"
+        >
+          <li>
+            <a
+              href="#inicio"
+              class="hover:underline focus:outline-none focus:ring-2 focus:ring-sky-400"
+            >
+              Início
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#sobre"
+              class="hover:underline focus:outline-none focus:ring-2 focus:ring-sky-400"
+            >
+              Sobre
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#contato"
+              class="hover:underline focus:outline-none focus:ring-2 focus:ring-sky-400"
+            >
+              Contato
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Seção de boas-vindas com contador reativo -->
+      <section
+        id="inicio"
+        class="mt-6 rounded-xl bg-white p-6 shadow"
+        aria-labelledby="sec-intro"
+      >
+        <h2
+          id="sec-intro"
+          class="text-xl font-semibold"
+        >
+          Boas-vindas
+        </h2>
+
+        <p class="mt-2">
+          Contador:
+          <strong class="text-sky-700">
+            {{ contador }}
+          </strong>
+        </p>
+
+        <button
+          type="button"
+          class="mt-4 inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-400"
+          aria-label="Somar um ao contador"
+          @click="contador++"
+        >
+          Somar +1
+        </button>
+      </section>
+
+      <!--
+        Área reservada para os cenários.
+        Insira aqui a seção correspondente ao cenário escolhido.
+      -->
+    </main>
+
+    <footer class="mx-auto max-w-5xl px-4 py-8 text-sm text-slate-500">
+      <p>© 2026 — Projeto de Extensão Front-end</p>
+    </footer>
+
+    <!-- Vue 3 via CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- Código principal da aplicação -->
+    <script src="main.js"></script>
+
+    <!-- Registro do Service Worker -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then((registration) => {
+              console.log(
+                "Service Worker registrado com sucesso:",
+                registration.scope
+              );
+            })
+            .catch((error) => {
+              console.error(
+                "Erro ao registrar o Service Worker:",
+                error
+              );
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carrinho Fácil | Papelaria</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonte da identidade visual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Nunito", sans-serif;
+      }
+
+      .online-dot {
+        color: #4fb3d9;
+      }
+
+      .offline-dot {
+        color: #1ebe5d;
+      }
+    </style>
+
+    <!-- Manifesto PWA -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#e63329" />
+  </head>
+
+  <body class="min-h-screen bg-[#eef3fa] text-[#0b1530]">
+    <a
+      href="#conteudo-principal"
+      class="sr-only rounded bg-[#4fb3d9] px-3 py-2 font-bold text-[#0b1530] focus:absolute focus:left-2 focus:top-2 focus:not-sr-only"
+    >
+      Ir para o conteúdo principal
+    </a>
+
+    <header class="bg-[#e63329] text-white shadow-lg">
+      <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-white">
+              Papelaria online
+            </p>
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+              Carrinho Fácil
+            </h1>
+            <p class="mt-2 max-w-xl text-red-50">
+              Materiais para organizar suas ideias, estudar e criar.
+            </p>
+          </div>
+          <div
+            class="rounded-2xl bg-[#c52821] px-4 py-3 text-sm text-white"
+          >
+            <span id="pwa-status-dot" class="online-dot" aria-hidden="true">●</span>
+            Funciona offline como PWA
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="app" class="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
+      <nav class="relative -mt-5" aria-label="Navegação principal">
+        <button
+          ref="btnMenu"
+          type="button"
+          class="inline-flex items-center gap-2 rounded-xl bg-[#4fb3d9] px-4 py-3 font-bold text-[#0b1530] shadow-lg transition hover:bg-[#25afd2] focus:outline-none focus:ring-4 focus:ring-[#4fb3d9] md:hidden"
+          @click="menuAberto = !menuAberto"
+          :aria-expanded="menuAberto.toString()"
+          :aria-label="menuAberto ? 'Fechar menu' : 'Abrir menu'"
+          aria-controls="menu-principal"
+        >
+          <span aria-hidden="true">☰</span> Menu
+        </button>
+
+        <ul
+          id="menu-principal"
+          class="mt-3 gap-6 rounded-xl bg-white p-4 font-bold text-[#1f6fb8] shadow md:flex md:bg-transparent md:p-0 md:shadow-none"
+          :class="menuAberto ? 'block' : 'hidden md:flex'"
+        >
+          <li><a class="rounded px-2 py-1 hover:bg-[#eef3fa] focus:outline-none focus:ring-2 focus:ring-[#4fb3d9]" href="#inicio">Início</a></li>
+          <li><a class="rounded px-2 py-1 hover:bg-[#eef3fa] focus:outline-none focus:ring-2 focus:ring-[#4fb3d9]" href="#vitrine">Vitrine</a></li>
+          <li><a class="rounded px-2 py-1 hover:bg-[#eef3fa] focus:outline-none focus:ring-2 focus:ring-[#4fb3d9]" href="#carrinho">Carrinho</a></li>
+        </ul>
+      </nav>
+
+      <section id="conteudo-principal" class="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]" aria-label="Conteúdo da loja">
+        <div>
+          <section id="inicio" class="rounded-3xl bg-white p-6 shadow-md sm:p-8" aria-labelledby="sec-intro">
+            <p class="text-sm font-extrabold uppercase tracking-widest text-[#e63329]">Escolha, adicione, organize</p>
+            <h2 id="sec-intro" class="mt-2 text-3xl font-extrabold text-[#0b1530]">Tudo para sua próxima ideia.</h2>
+            <p class="mt-3 max-w-2xl text-slate-600">
+              Monte seu carrinho com praticidade. Acompanhe os itens e o valor total em tempo real.
+            </p>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                class="rounded-xl bg-[#e63329] px-4 py-2 font-bold text-white transition hover:bg-[#c52821] focus:outline-none focus:ring-4 focus:ring-red-200"
+                aria-label="Somar um ao contador de interações"
+                @click="contador++"
+              >
+                Testar interação
+              </button>
+              <span class="text-sm text-slate-600">Interações: <strong class="text-[#1f6fb8]">{{ contador }}</strong></span>
+            </div>
+          </section>
+
+          <section id="vitrine" class="mt-6 rounded-3xl bg-white p-6 shadow-md sm:p-8" aria-labelledby="titulo-vitrine">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p class="text-sm font-extrabold uppercase tracking-widest text-[#e63329]">Seleção da semana</p>
+                <h2 id="titulo-vitrine" class="mt-1 text-2xl font-extrabold text-[#0b1530]">Vitrine</h2>
+              </div>
+              <span class="rounded-full bg-[#eef3fa] px-3 py-1 text-sm font-bold text-[#1f6fb8]">{{ produtos.length }} produtos</span>
+            </div>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <article
+                v-for="produto in produtos"
+                :key="produto.id"
+                class="flex flex-col overflow-hidden rounded-2xl border border-[#eef3fa] bg-[#eef3fa] transition hover:-translate-y-1 hover:shadow-md"
+              >
+                <img :src="produto.imagem" :alt="produto.alt" class="h-36 w-full object-cover" />
+                <div class="flex flex-1 flex-col p-4">
+                  <h3 class="text-lg font-extrabold text-[#0b1530]">{{ produto.nome }}</h3>
+                  <p class="mt-1 text-sm text-slate-600">{{ produto.descricao }}</p>
+                  <div class="mt-auto flex items-center justify-between gap-3 pt-4">
+                    <strong class="text-lg text-[#1f6fb8]">{{ formatarMoeda(produto.preco) }}</strong>
+                    <button
+                      type="button"
+                      class="rounded-xl bg-[#4fb3d9] px-3 py-2 text-sm font-extrabold text-[#0b1530] transition hover:bg-[#25afd2] focus:outline-none focus:ring-4 focus:ring-[#4fb3d9]"
+                      :aria-label="`Adicionar ${produto.nome} ao carrinho`"
+                      @click="adicionarCarrinho(produto)"
+                    >
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <aside id="carrinho" class="h-fit rounded-3xl bg-[#0b1530] p-6 text-white shadow-md sm:p-8" aria-labelledby="titulo-carrinho">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-sm font-extrabold uppercase tracking-widest text-[#4fb3d9]">Seu pedido</p>
+              <h2 id="titulo-carrinho" class="mt-1 text-2xl font-extrabold">Carrinho</h2>
+            </div>
+            <span class="rounded-full bg-[#1ba6b7] px-3 py-1 text-sm font-bold" aria-label="Quantidade de itens no carrinho">{{ carrinho.length }}</span>
+          </div>
+
+          <p v-if="carrinho.length === 0" class="mt-8 rounded-2xl border border-dashed border-[#1f6fb8] p-5 text-center text-blue-100">
+            Seu carrinho está vazio. Adicione um produto para começar.
+          </p>
+
+          <ul v-else class="mt-6 space-y-3" aria-live="polite">
+            <li
+              v-for="(produto, indice) in carrinho"
+              :key="`${produto.id}-${indice}`"
+              class="flex items-center justify-between gap-3 rounded-xl bg-[#0d6d7a] p-3"
+            >
+              <span class="min-w-0">
+                <strong class="block truncate">{{ produto.nome }}</strong>
+                <span class="text-sm text-cyan-100">{{ formatarMoeda(produto.preco) }}</span>
+              </span>
+              <button
+                type="button"
+                class="shrink-0 rounded-lg bg-white/10 px-3 py-2 text-sm font-bold text-white transition hover:bg-[#e63329] focus:outline-none focus:ring-4 focus:ring-[#4fb3d9]"
+                :aria-label="`Remover ${produto.nome} do carrinho`"
+                @click="removerCarrinho(indice)"
+              >
+                Remover
+              </button>
+            </li>
+          </ul>
+
+          <div class="mt-8 border-t border-[#1f6fb8] pt-5" aria-live="polite">
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-blue-100">Total</span>
+              <strong class="text-2xl text-[#4fb3d9]">{{ formatarMoeda(totalCarrinho) }}</strong>
+            </div>
+            <p class="mt-2 text-sm text-cyan-100">O total é atualizado automaticamente.</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="border-t border-[#eef3fa] bg-white">
+      <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-slate-500 sm:px-6 lg:px-8">
+        <p><strong class="text-[#e63329]">Carrinho Fácil</strong> · Projeto de Extensão Front-end · 2026</p>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="main.js"></script>
+    <script>
+      const pwaStatusDot = document.getElementById("pwa-status-dot");
+
+      function atualizarIndicadorOffline() {
+        pwaStatusDot.classList.toggle("offline-dot", !navigator.onLine);
+        pwaStatusDot.classList.toggle("online-dot", navigator.onLine);
+      }
+
+      window.addEventListener("online", atualizarIndicadorOffline);
+      window.addEventListener("offline", atualizarIndicadorOffline);
+      atualizarIndicadorOffline();
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch((error) => {
+            console.error("Erro ao registrar o Service Worker:", error);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
